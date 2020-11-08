@@ -7,15 +7,17 @@ using System.Text;
 
 namespace AddressBook_ADO
 {
-    class AddressBookRepository
+    public class AddressBookRepository
     {
         public static string connectionString = @"Server=MUKESH\SQLEXPRESS; Initial Catalog =addressBookService;;Integrated Security=True;Connect Timeout=30;
-Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+                       Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
         SqlConnection connection = new SqlConnection(connectionString);
-        ///UC12
-        public void GetAddresses()
+
+       public  List<ContactDetails> contactsList = new List<ContactDetails>();
+        ///UC16
+        public List<ContactDetails> GetAddressBookDetails()
         {
-            ContactDetails contactDetails = new ContactDetails();
+            //ContactDetails contactDetails = new ContactDetails();
             try
             {
                 using (connection)
@@ -33,6 +35,7 @@ Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubn
                     {
                         while (reader.Read())
                         {
+                            ContactDetails contactDetails = new ContactDetails();
                             contactDetails.FirstName = reader.GetString(0);
                             contactDetails.LastName = reader.GetString(1);
                             contactDetails.PhoneNumber = reader.GetString(2);
@@ -44,17 +47,19 @@ Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubn
                             contactDetails.AddressBookName = reader.GetString(8);
                             contactDetails.ContactType = reader.GetString(9);
 
-                            Console.WriteLine(contactDetails.FirstName+"  "+ contactDetails.LastName+"  "+ contactDetails.Area+"  "+contactDetails.City
+                            Console.WriteLine(contactDetails.FirstName+"  "+ contactDetails.LastName+"  "+contactDetails.PhoneNumber+" "+ contactDetails.Area+"  "+contactDetails.City
                                 +"  "+contactDetails.State+"  "+contactDetails.Country+" "+contactDetails.AddressBookName+" "+contactDetails.ContactType);
                             Console.WriteLine("\n");
+                            contactsList.Add(contactDetails);
                         }
                     }
+                   
                     else
                     {
                         Console.WriteLine("No data found");
                     }
                     reader.Close();
-                    //this.connection.Close();
+                    return contactsList;
                 }
             }
             catch (Exception ex)
@@ -64,6 +69,29 @@ Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubn
             finally
             {
                 this.connection.Close();
+            }
+        }
+        public void UpdateContact(string firstName, string lastName, string column, string newValue)
+        {
+            try
+            {
+                // Open connection
+                connection.Open();
+
+                // Declare a command and give all its properties
+                SqlCommand command = new SqlCommand();
+                command.CommandText = "update contactdetails set " + column + " = '" + newValue + "' where firstname = '"
+                                        + firstName + "' and lastname = '" + lastName + "'";
+                command.Connection = connection;
+                command.ExecuteNonQuery();
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                    connection.Close();
             }
         }
     }
