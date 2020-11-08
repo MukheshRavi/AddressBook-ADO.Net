@@ -7,6 +7,7 @@ namespace AddressBook_ADO
         static void Main(string[] args)
         {
             Console.WriteLine("Welcome to Address Book ADO Problem");
+            new AddressBookRepository().GetAddresses();
         }
     }
 }
