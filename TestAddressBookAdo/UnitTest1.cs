@@ -1,20 +1,26 @@
-﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using AddressBook_ADO;
 using System.Collections.Generic;
 
-namespace AddressBook_ADO
+namespace TestAddressBookAdo
 {
-    class Program
+    [TestClass]
+    public class UnitTest1
     {
-        static void Main(string[] args)
+        [TestMethod]
+        public void UpdateContactAndTestTheDB()
         {
-            Console.WriteLine("Welcome to Address Book ADO Problem");
+            // Arrange
             AddressBookRepository addressBookRepository = new AddressBookRepository();
 
             // Act
-            addressBookRepository.UpdateContact("Ravi", "Prasad", "PhoneNumber", "9441870640");
+            addressBookRepository.UpdateContact("Ravi", "Prasad", "phoneNumber", "9441870640");
             List<ContactDetails> contactlist = addressBookRepository.GetAddressBookDetails();
             ContactDetails contact = contactlist.Find(contact => contact.FirstName == "Ravi" &&
                                                         contact.LastName == "Prasad");
+
+            // Assert
+            Assert.AreEqual("9441870640", contact.PhoneNumber);
         }
     }
 }
