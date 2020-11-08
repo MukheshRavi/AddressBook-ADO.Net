@@ -10,6 +10,7 @@ namespace AddressBook_ADO
         public string LastName { get; set; }
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
+        public DateTime date { get; set; }
         public string Area { get; set; }
         public string City { get; set; }
         public string State { get; set; }
