@@ -11,10 +11,8 @@ namespace AddressBook_ADO
             AddressBookRepository addressBookRepository = new AddressBookRepository();
 
             // Act
-            addressBookRepository.UpdateContact("Ravi", "Prasad", "PhoneNumber", "9441870640");
-            List<ContactDetails> contactlist = addressBookRepository.GetAddressBookDetails();
-            ContactDetails contact = contactlist.Find(contact => contact.FirstName == "Ravi" &&
-                                                        contact.LastName == "Prasad");
+           //List<string> actualList = addressBookRepository.GetContactsAddedInPeriod(new DateTime(2020, 11, 05), new DateTime(2020, 11, 11));
+            List<ContactDetails> actualContactList = addressBookRepository.GetContactsByCityOrState("Hyd", "Telangana");
         }
     }
 }
