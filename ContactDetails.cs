@@ -4,7 +4,7 @@ using System.Text;
 
 namespace AddressBook_ADO
 {
-   public class ContactDetails
+    public class ContactDetails
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -17,5 +17,14 @@ namespace AddressBook_ADO
         public string Country { get; set; }
         public string AddressBookName { get; set; }
         public string ContactType { get; set; }
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+                return false;
+            if (!(obj is ContactDetails))
+                return false;
+            ContactDetails contact = (ContactDetails)obj;
+            return this.FirstName == contact.FirstName && this.LastName == contact.LastName;
+        }
     }
 }
