@@ -228,5 +228,42 @@ namespace AddressBook_ADO
                 connection.Close();
             }
         }
+        public void AddNewContact(ContactDetails contact)
+        {
+            try { 
+                // Open connection
+                connection.Open();
+
+                // Declare a command
+                SqlCommand command = new SqlCommand();
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+                command.CommandText = "dbo.AddNewContact";
+                command.Connection = connection;
+                        command.Parameters.Clear();
+                        command.Parameters.AddWithValue("@FirstName", contact.FirstName);
+                        command.Parameters.AddWithValue("@LastName", contact.LastName);
+                        command.Parameters.AddWithValue("@PhoneNumber", contact.PhoneNumber);
+                        command.Parameters.AddWithValue("@Email", contact.Email);
+                        command.Parameters.AddWithValue("@Area", contact.Area);
+                        command.Parameters.AddWithValue("@City", contact.City);
+                        command.Parameters.AddWithValue("@State", contact.State);
+                        command.Parameters.AddWithValue("@Country", contact.Country);
+                        command.Parameters.AddWithValue("@addressBookName", contact.AddressBookName);
+                        command.Parameters.AddWithValue("@contactType", contact.ContactType);
+                        var result = command.ExecuteNonQuery();
+                    
+            }
+            catch
+            {
+                if (connection.State == System.Data.ConnectionState.Open)
+                    connection.Close();
+            }
+            finally
+            {
+
+                if (connection.State == System.Data.ConnectionState.Open)
+                    connection.Close();
+            }
+        }
     }
 }
