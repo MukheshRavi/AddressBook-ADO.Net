@@ -11,7 +11,8 @@ namespace AddressBook_ADO
             AddressBookRepository addressBookRepository = new AddressBookRepository();
 
             // Act
-            List<string> actualList = addressBookRepository.GetContactsAddedInPeriod(new DateTime(2020, 11, 05), new DateTime(2020, 11, 11));
+           //List<string> actualList = addressBookRepository.GetContactsAddedInPeriod(new DateTime(2020, 11, 05), new DateTime(2020, 11, 11));
+            List<ContactDetails> actualContactList = addressBookRepository.GetContactsByCityOrState("Hyd", "Telangana");
         }
     }
 }

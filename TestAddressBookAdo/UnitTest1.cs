@@ -37,5 +37,22 @@ namespace TestAddressBookAdo
             // Assert
             Assert.AreEqual(actualList.Count,expectedList.Count);
         }
+        /// <summary>
+        /// TC 19 Get contacts by city or by state
+        /// </summary>
+        [TestMethod]
+        public void GetContactsByCityOrState()
+        {
+            // Arrange
+            AddressBookRepository addressBookRepository = new AddressBookRepository();
+
+            // Act
+            List<ContactDetails> actualContactList = addressBookRepository.GetContactsByCityOrState("Hyd", "Telangana");
+            List<ContactDetails> expectedContactList = addressBookRepository.GetAddressBookDetails().FindAll(contact => contact.City == "Hyd"
+                                                                                              || contact.State == "Telangana");
+
+            // Assert
+            Assert.AreEqual(actualContactList.Count, expectedContactList.Count);
+        }
     }
 }
